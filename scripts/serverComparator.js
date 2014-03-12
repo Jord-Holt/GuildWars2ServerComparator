@@ -103,7 +103,6 @@ var serverComparator = {
 	}
 }
 
-
 serverComparator.data.getWorldData("us");
 
 })(this, document);
