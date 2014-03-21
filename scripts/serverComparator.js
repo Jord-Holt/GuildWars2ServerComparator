@@ -12,13 +12,13 @@ var serverComparator = {
 
 			query.find({
 				success : function(worlds) {
-					console.log(worlds);
+					var worldList = [];
+
 					$.each(worlds, function(i) {
-						serverComparator.model.WorldDataListViewModel.worldData.push(new serverComparator.model.WorldDataViewModel(worlds[i].get("world_id"), worlds[i].get("world_name"), worlds[i].get("success_percentage")));
+						worldList.push(new serverComparator.model.World(worlds[i].get("world_id"), worlds[i].get("world_name"), worlds[i].get("success_percentage")));
 					});
 
-					ko.observable(serverComparator.model.WorldDataViewModel);
-					ko.applyBindings(serverComparator.model.WorldDataListViewModel);
+					ko.applyBindings(new serverComparator.model.WorldDataListViewModel(worldList));
 				},
 				error:function(error) {
 		        	alert("Error on world data retrieval");
@@ -27,18 +27,27 @@ var serverComparator = {
 		}
 	},
 	model : {
-		WorldDataListViewModel : {
-			worldData : ko.observableArray()
+		WorldDataListViewModel : function(worlds) {
+			this.worldData = ko.observableArray(worlds);
+
+			this.gridViewModel = new ko.simpleGrid.viewModel({
+				data: this.worldData,
+				columns: [
+					{headerText: "World Name", rowText: "worldName"},
+					{headerText: "Success Percentage", rowText: "successPercentage"}
+				],
+				pageSize: 10
+			});
 		},
 
-		WorldDataViewModel : function(worldID, worldName, successPercentage) {
+		World : function(worldID, worldName, successPercentage) {
 			var self = this;
-			self.worldID = ko.observable(worldID);
-			self.worldName = ko.observable(worldName);
-			self.successPercentage = ko.observable(successPercentage);
+			self.worldID = worldID;
+			self.worldName = worldName;
+			self.successPercentage = successPercentage;
 		}
 	}
-}
+};
 
 serverComparator.data.getWorldData("us");
 
