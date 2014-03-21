@@ -1,19 +1,28 @@
+
 (function(window, document, undefined){
+
+Parse.initialize("9Uuj7Ak6wRIv9MGRrIMzGVGoMXsGMlM8JUSX7nu1", "W4f9wcCntjuU9R34QhJ42K2grXnDL46bu1LhTyr4");
 
 var serverComparator = {
 	data : {
 		// Change this function to obtain data through parse and update the array via long polling.
 		getWorldData : function(location) {
-			serverComparator.data.getWorlds(location).done(function(world) {
+			var WorldData = Parse.Object.extend("WorldData");
+			var query = new Parse.Query(WorldData);
 
-				$.each(world, function(i) {
-					serverComparator.model.WorldDataListViewModel.worldData.push(new serverComparator.model.WorldDataViewModel(world[i].id, world[i].name, 0, 0, 0));
-				});
+			query.find({
+				success : function(worlds) {
+					console.log(worlds);
+					$.each(worlds, function(i) {
+						serverComparator.model.WorldDataListViewModel.worldData.push(new serverComparator.model.WorldDataViewModel(worlds[i].get("world_id"), worlds[i].get("world_name"), worlds[i].get("success_percentage")));
+					});
 
-				ko.observable(serverComparator.model.WorldDataViewModel);
-				ko.applyBindings(serverComparator.model.WorldDataListViewModel);
-
-				serverComparator.data.calculateWorldData(serverComparator.model.WorldDataListViewModel.worldData());
+					ko.observable(serverComparator.model.WorldDataViewModel);
+					ko.applyBindings(serverComparator.model.WorldDataListViewModel);
+				},
+				error:function(error) {
+		        	alert("Error on world data retrieval");
+		        }
 			});
 		}
 	},
@@ -22,12 +31,11 @@ var serverComparator = {
 			worldData : ko.observableArray()
 		},
 
-		WorldDataViewModel : function(worldID, worldName, successfulEvents, successPercentage, failedEvents) {
+		WorldDataViewModel : function(worldID, worldName, successPercentage) {
 			var self = this;
 			self.worldID = ko.observable(worldID);
 			self.worldName = ko.observable(worldName);
 			self.successPercentage = ko.observable(successPercentage);
-			self.percentages = ko.observableArray();
 		}
 	}
 }
