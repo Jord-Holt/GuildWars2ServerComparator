@@ -1,6 +1,8 @@
 <!DOCTYPE>
 <html>
 	<head>
+		<link rel="stylesheet/less" type="stylesheet/less" href="css/serverComparator.less"/>
+
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
 		<script src="scripts/jquery-1.11.0.min.js"></script>
@@ -12,6 +14,23 @@
 	</head>
 
 	<body>
-		<div data-bind='simpleGrid: gridViewModel'></div>
+		<table id="worldTable">
+			<thead>
+				<tr>
+					<th data-bind="click: function() { sortBy('worldName') }">World Name</th>
+					<th data-bind="click: function() { sortBy('successPercentage') }">Success Percentage</th>
+				</tr>
+			</thead>
+			<tbody data-bind="foreach: worldData">
+				<tr data-bind="visible: $index() < $parent.pageMax() && $index() >= $parent.pageMin()"> 
+				    <td data-bind="text: worldName"></td> 
+				    <td data-bind="text: successPercentage"></td>
+				</tr> 
+			</tbody>
+		</table>
+		Page:
+		<div data-bind="foreach: new Array(pageLimit())">
+			<a href="#" data-bind="text:$index() + 1, click: function() {$parent.setPage($index() + 1)}"></a>
+		</div>
 	</body>
 </html>
