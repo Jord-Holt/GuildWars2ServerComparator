@@ -33,8 +33,11 @@ var serverComparatorWorldTable = {
 			var self = this;
 
 			this.worldData = ko.observableArray(worlds);
-
+			
+			// Pagination parameters
 			this.pageLimit = ko.observable(10);
+
+			this.pages = ko.observable(Math.floor(worlds.length / 10) + Math.ceil(worlds.length % 10));
 
 			this.currentPage = ko.observable(1);
 
@@ -106,6 +109,28 @@ var serverComparatorWorldTable = {
 				self.pageMax(self.currentPage() * self.pageLimit());
 				self.pageMin(self.pageMax() - self.pageLimit());
 			};
+
+			this.nameFilterValue = ko.observable("");
+
+			// Input world name search filter.
+			this.filterNames = function() {
+				self.nameFilterValue($("#worldNameFilerInput").val());
+			};
+
+			this.filter = function(index, pageMax, pageMin, worldName) {
+				if(self.nameFilterValue() === "") {
+
+					if(index < pageMax && index >= pageMin) {
+						return true;
+					} else {
+						return false;
+					}
+				} else if (worldName.indexOf(self.nameFilterValue()) !== -1) {
+					return true;
+				}
+
+				return false;
+			}
 		},
 
 		World : function(worldID, worldName, successPercentage) {
