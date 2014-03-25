@@ -1,37 +1,12 @@
-
-(function(window, document, undefined){
-
-Parse.initialize("9Uuj7Ak6wRIv9MGRrIMzGVGoMXsGMlM8JUSX7nu1", "W4f9wcCntjuU9R34QhJ42K2grXnDL46bu1LhTyr4");
-
 var serverComparatorWorldTable = {
-	data : {
-		// Change this function to obtain data through parse and update the array via long polling.
-		getWorldData : function(location) {
-			var WorldData = Parse.Object.extend("WorldData");
-			var query = new Parse.Query(WorldData);
-
-			query.find({
-				success : function(worlds) {
-					var worldList = [];
-
-					$.each(worlds, function(i) {
-						worldList.push(new serverComparatorWorldTable.model.World(worlds[i].get("world_id"), worlds[i].get("world_name"), worlds[i].get("success_percentage").replace("0.",'') + " %"));
-					});
-
-					ko.applyBindings(new serverComparatorWorldTable.model.WorldDataListViewModel(worldList));
-				},
-				error:function(error) {
-		        	alert("Error on world data retrieval");
-		        }
-			});
-		}
-	},
+	worldTableModelReference : null,
+	tableBound : false,
 	model : {
 		WorldDataListViewModel : function(worlds) {
 			var self = this;
 
 			this.worldData = ko.observableArray(worlds);
-			
+
 			// Pagination parameters
 			this.pageLimit = ko.observable(10);
 
@@ -46,10 +21,10 @@ var serverComparatorWorldTable = {
 			this.sortBy = function(columnName) {
 				switch(columnName) {
 					case 'worldName': 
-						serverComparatorWorldTable.utils.sortByWorldName(self.worldData);
+						serverComparatorWorldTable.localUtils.sortByWorldName(self.worldData);
 						break;
 					case 'successPercentage': 
-						serverComparatorWorldTable.utils.sortBySuccessPercentage(self.worldData);
+						serverComparatorWorldTable.localUtils.sortBySuccessPercentage(self.worldData);
 						break;
 				}
 			};
@@ -62,7 +37,6 @@ var serverComparatorWorldTable = {
 
 			this.nameFilterValue = ko.observable("");
 
-			// Input world name search filter.
 			this.filterNames = function() {
 				self.nameFilterValue($("#worldNameFilerInput").val());
 			};
@@ -74,7 +48,7 @@ var serverComparatorWorldTable = {
 					} else {
 						return false;
 					}
-				} else if (serverComparatorWorldTable.utils.compareWorldNameWithSearchInput(worldName,self.nameFilterValue()) !== -1) {
+				} else if (serverComparatorWorldTable.localUtils.compareWorldNameWithSearchInput(worldName,self.nameFilterValue()) !== -1) {
 					return true;
 				}
 
@@ -101,12 +75,12 @@ var serverComparatorWorldTable = {
 		worldName : "ascending",
 		successPercentage : "ascending"
 	},
-	utils : {
+	localUtils : {
 		sanitize : function(string) {
 			return string.toUpperCase().replace(/[^a-z0-9\s]/gi, '');
 		},
 		compareWorldNameWithSearchInput : function(worldName, input) {
-			return serverComparatorWorldTable.utils.sanitize(worldName).indexOf(serverComparatorWorldTable.utils.sanitize(input));
+			return serverComparatorWorldTable.localUtils.sanitize(worldName).indexOf(serverComparatorWorldTable.localUtils.sanitize(input));
 		},
 		sortByWorldName : function(worldData) {
 			if(serverComparatorWorldTable.sort.worldName === "ascending") {
@@ -161,10 +135,34 @@ var serverComparatorWorldTable = {
 			} else {
 				console.log("Error determining success percentage sort order in sortBy function.");
 			}
+		},
+		setLanguage : function(location) {
+			$("#languageSelector").val(location);
+			services.data.getWorldData(location, function(worlds) {
+				var worldList = [];
+
+				$.each(worlds, function(i) {
+					worldList.push(new serverComparatorWorldTable.model.World(worlds[i].get("world_id"), worlds[i].get("world_name"), worlds[i].get("success_percentage").replace("0.",'') + " %"));
+				});
+
+				if(serverComparatorWorldTable.tableBound === false) {
+					serverComparatorWorldTable.worldTableModelReference = new serverComparatorWorldTable.model.WorldDataListViewModel(worldList);
+					ko.applyBindings(serverComparatorWorldTable.worldTableModelReference);
+					serverComparatorWorldTable.tableBound = true;
+				} else {
+					serverComparatorWorldTable.worldTableModelReference.worldData(worldList);
+				}
+			});
 		}
 	}
 };
 
-serverComparatorWorldTable.data.getWorldData("us");
+$(document).ready(function() {
 
-})(this, document);
+serverComparatorWorldTable.localUtils.setLanguage("EN");
+
+$("#languageSelector").change(function() {
+	serverComparatorWorldTable.localUtils.setLanguage($("#languageSelector").val());
+});
+
+});

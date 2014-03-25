@@ -8,12 +8,19 @@
 		<script src="scripts/jquery-1.11.0.min.js"></script>
 		<script src="scripts/knockout-3.0.0.js"></script>
 		<script src="scripts/knockout.mapping.js"></script>
-		<script src="scripts/knockout.simpleGrid.1.3.js"></script>
+		<script src="scripts/services.js"></script>
 		<script src="scripts/serverComparatorWorldTable.js"></script>
 		<script src="scripts/less-1.7.0.min.js"></script>
 	</head>
 
 	<body>
+		<select id="languageSelector">
+			<option>DE</option>
+			<option>EN</option>
+			<option>ES</option>
+			<option>FR</option>
+		</select>
+
 		<div data-bind="foreach: new Array(pages())">
 			<a href="#" data-bind="visible: $parent.worldNameSearchInput(), text:$index() + 1, click: function() {$parent.setPage($index() + 1)}"></a>
 		</div>
