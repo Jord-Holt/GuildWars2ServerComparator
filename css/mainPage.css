@@ -1,0 +1,23 @@
+#holder{
+	background:white;
+	margin:auto;
+	border-radius:10px;
+	text-align: center;
+	width: 75%;
+}
+.center{
+	text-align: center;
+}
+.marginAuto{
+	margin:auto;
+}
+body{
+	background:#CCC;
+	position: relative;
+}
+label{
+	font-weight: bold;
+}
+.redFont{
+	color:red;
+}

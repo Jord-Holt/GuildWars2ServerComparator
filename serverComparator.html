@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<link rel="stylesheet/less" type="stylesheet/less" href="css/serverComparator.less"/>
+		<link rel="stylesheet" type="text/css" href="css/mainpage.css"/>
 
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
@@ -14,35 +15,37 @@
 	</head>
 
 	<body>
-		<label for="languageSelector">Language:</label> 
-		<select id="languageSelector">
-			<option>DE</option>
-			<option>EN</option>
-			<option>ES</option>
-			<option>FR</option>
-		</select>
+		<div id="holder">
+			<label for="languageSelector">Language:</label>
+			<select id="languageSelector">
+				<option>DE</option>
+				<option>EN</option>
+				<option>ES</option>
+				<option>FR</option>
+			</select>
 
-		<div data-bind="foreach: new Array(pages())">
-			<a href="#" data-bind="visible: $parent.worldNameSearchInput(), text:$index() + 1, click: function() {$parent.setPage($index() + 1)}"></a>
-		</div>
+			<div data-bind="foreach: new Array(pages())">
+				<a href="#" data-bind="visible: $parent.worldNameSearchInput(), text:$index() + 1, click: function() {$parent.setPage($index() + 1)}"></a>
+			</div>
 
-		<input id="worldNameFilerInput" placeholder="World Name" type="text" data-bind="event: {keyup: filterNames}"></input>
+			<input id="worldNameFilerInput" placeholder="World Name" type="text" data-bind="event: {keyup: filterNames}"></input>
 
-		<div id="worldTable">
-			<table>
-				<thead>
-					<tr>
-						<th data-bind="click: function() { sortBy('worldName') }">World Name</th>
-						<th data-bind="click: function() { sortBy('successPercentage') }">Success Percentage</th>
-					</tr>
-				</thead>
-				<tbody data-bind="foreach: worldData">
-					<tr data-bind="visible: $parent.filter($index(), $parent.pageMax(), $parent.pageMin(), worldName)"> 
-					    <td data-bind="text: worldName"></td> 
-					    <td data-bind="text: successPercentage"></td>
-					</tr> 
-				</tbody>
-			</table>
-		</div>
+			<div id="worldTable">
+				<table class="marginAuto">
+					<thead>
+						<tr>
+							<th data-bind="click: function() { sortBy('worldName') }">World Name</th>
+							<th data-bind="click: function() { sortBy('successPercentage') }">Success Percentage</th>
+						</tr>
+					</thead>
+					<tbody data-bind="foreach: worldData">
+						<tr data-bind="visible: $parent.filter($index(), $parent.pageMax(), $parent.pageMin(), worldName)">
+						    <td class="center" data-bind="text: worldName"></td>
+						    <td class="center" data-bind="text: successPercentage"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div><!--End World Table -->
+		</div><!-- End Holder -->
 	</body>
 </html>
