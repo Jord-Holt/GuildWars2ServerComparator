@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Server Comparator": {
+            "applicationId": "9Uuj7Ak6wRIv9MGRrIMzGVGoMXsGMlM8JUSX7nu1", 
+            "masterKey": "jGXysAqAyvn0chM1vbtmuSZV4I4miof23XYSKPjp"
+        }, 
+        "_default": {
+            "link": "Server Comparator"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.17"
+    }
+}
