@@ -1,9 +1,9 @@
-GuildWars2ServerComparator
+Guild Wars 2 Server Comparator
 ==========================
 
 An information hub about Guild Wars 2 servers, providing information about particular servers and how they compare to one another.
 
-App information
+***App information***
 
   When you pull in the app for the first time, you will notice some additional structure that may not be obvious at first glance.
 Here is a run down of the folder structure and what everything is doing....
