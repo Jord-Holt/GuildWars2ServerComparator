@@ -5,19 +5,17 @@ module.exports = function(grunt) {
 			clone : {
 				options: {
 					repository : 'https://github.com/Xfanger/GuildWars2ServerComparator.git',
-					directory : 'Build/'
+					directory : 'Build/',
+					branch : 'master'
 				}
 			}
 		},
 		copy: {
 			main: {
 				expand : true,
-				cwd : 'Build/',
-				src : ['*'],
+				cwd : 'Build/app',
+				src : ['**'],
 				dest : 'parse/public/'
-			},
-			options : {
-				noProcess : ["Build/.git","Build/.gitattributes", "Build/.gitignore"]
 			}
 		},
 		clean : ["Build/*","Build/.git","Build/.gitattributes", "Build/.gitignore"],
@@ -47,6 +45,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-shell');
 
 	grunt.registerTask('default', []);
-	grunt.registerTask('stage', ['clean','gitclone','copy','shell:deploy']); // Will pull latest changes from project master branch and stage in parse directory for deployment to test environment.
+	grunt.registerTask('deploy-test', ['clean','gitclone','copy','shell:deploy']); // Will pull latest changes from project master branch and stage in parse directory for deployment to test environment.
 	grunt.registerTask('start-dev', ['connect']);
 };
