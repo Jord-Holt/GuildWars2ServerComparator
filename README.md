@@ -14,7 +14,7 @@ Build/ - When deploying, git clones the latest and greatest from the master bran
          the app directory out and places it into the parse folder for deployment. This is a good way to see what exactly
          was handed to parse for deployment. Refer to this if a deployment seems to have gone backwards.
          
-node_modules/ - This is simple where all of the installed node modules are contained, many to all of these should be modules
+node_modules/ - This is simply where all of the installed node modules are contained, many to all of these should be modules
                grunt is using in the build process. (grunt-config-copy, grunt-git, etc....)
 
 parse/ - This is the directory containing all of the relevent code that is deployed to the parse cloud, in this case
@@ -27,18 +27,18 @@ Gruntfile.js - Configuration of tasks used by grunt, here you will find configur
 
 package.json - This file holds project metadata, this being things like version number, app name, installed grunt plugins, etc...
 
-Grunt tasks
+***Grunt Tasks***
 
   Here is a list outlining the grunt tasks available currently to the project. Note that all tasks will need to be be prefixed
-  with 'grunt', such as 'grunt deploy-test', to see the code for these tasks and the order they are run, you can find this in
+  with 'grunt', such as 'grunt deploy-test', to see the cofiguration and setup for these tasks and the order they are run, you can refer to
   the Gruntfile.js.
   
-  grunt - Running grunt by itself will run whatever tasks are set for 'default', currently none.
+  grunt - Running grunt by itself will run whatever tasks are set for 'default' (currently none).
   
   grunt deploy-test - Will clean the existing Build/ directory and copy a fresh clone of the master branch to Build/, will
   then copy out the app/ directory, move it to the parse/public directory and deploy to the testing environment.
   
   grunt start-dev - Will spin up a server to view and prototype the app locally.
   
-If any changes need to be made to the build, please let me know, the build impacts everyone and it is important that it is kept
-fairly uniform in order to enforce project convention and standardization.
+***If any changes need to be made to the build, please let me know, the build impacts everyone and it is important that it is kept
+fairly uniform in order to enforce project convention and standardization.***
