@@ -36,7 +36,8 @@ package.json - This file holds project metadata, this being things like version 
   grunt - Running grunt by itself will run whatever tasks are set for 'default' (currently none).
   
   grunt deploy-test - Will clean the existing Build/ directory and copy a fresh clone of the master branch to Build/, will
-  then copy out the app/ directory, move it to the parse/public directory and deploy to the testing environment.
+  then copy out the app/ directory, move it to the parse/public directory and deploy to the testing environment. As a result, when deploying you ***must
+  make sure that your branch is committed and merged to the master branch. ***
   
   grunt start-dev - Will spin up a server to view and prototype the app locally.
   
