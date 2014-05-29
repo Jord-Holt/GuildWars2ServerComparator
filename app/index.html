@@ -14,6 +14,8 @@
 	</head>
 
 	<body>
+		<div id="title">GW2 Server Comparator</div>
+
 		<label for="languageSelector">Language:</label> 
 		<select id="languageSelector">
 			<option>DE</option>
@@ -22,27 +24,25 @@
 			<option>FR</option>
 		</select>
 
-		<div data-bind="foreach: new Array(pages())">
+		<div id="worldTablePages" data-bind="foreach: new Array(pages())">
 			<a href="#" data-bind="visible: $parent.worldNameSearchInput(), text:$index() + 1, click: function() {$parent.setPage($index() + 1)}"></a>
 		</div>
 
 		<input id="worldNameFilerInput" placeholder="World Name" type="text" data-bind="event: {keyup: filterNames}"></input>
 
-		<div id="worldTable">
-			<table>
-				<thead>
-					<tr>
-						<th data-bind="click: function() { sortBy('worldName') }">World Name</th>
-						<th data-bind="click: function() { sortBy('successPercentage') }">Success Percentage</th>
-					</tr>
-				</thead>
-				<tbody data-bind="foreach: worldData">
-					<tr data-bind="visible: $parent.filter($index(), $parent.pageMax(), $parent.pageMin(), worldName)"> 
-					    <td data-bind="text: worldName"></td> 
-					    <td data-bind="text: successPercentage"></td>
-					</tr> 
-				</tbody>
-			</table>
-		</div>
+		<table id="worldTable">
+			<thead>
+				<tr>
+					<th data-bind="click: function() { sortBy('worldName') }">World Name</th>
+					<th data-bind="click: function() { sortBy('successPercentage') }">Success Percentage</th>
+				</tr>
+			</thead>
+			<tbody data-bind="foreach: worldData">
+				<tr data-bind="visible: $parent.filter($index(), $parent.pageMax(), $parent.pageMin(), worldName)"> 
+				    <td data-bind="text: worldName"></td> 
+				    <td data-bind="text: successPercentage"></td>
+				</tr> 
+			</tbody>
+		</table>
 	</body>
 </html>

@@ -4,15 +4,34 @@
 	border: 1px solid black;
 }
 
+.PaginationStyle {
+	display:inline-block;
+	border: 1px solid black;
+	width: 5%;
+	text-align: center;
+	line-height: 100%;
+}
+
+/* World Table Styling */
 table, tr, td, th {
 	.TestBorder;
 	text-align: center;
+}
+
+#worldTable {
+	table-layout: fixed;
+	width: 40%;
 }
 
 th {
 	transition: background-image 1.0s ease-in-out;
 	-moz-transition: background-image 1.0s ease-in-out;
 	-webkit-transition: background-image 1.0s ease-in-out;
+}
+
+th, td {
+	overflow: hidden;
+	width: 100px;
 }
 
 th:hover {
@@ -29,4 +48,18 @@ th:hover {
 	background-image: -webkit-linear-gradient(bottom, #8A959C 0%, #464E54 100%);
 	background-image: -ms-linear-gradient(bottom, #8A959C 0%, #464E54 100%);
 	background-image: linear-gradient(to bottom, #8A959C 0%, #464E54 100%);
+}
+
+/* Pagination Styling */
+
+#worldTablePages a {
+	.PaginationStyle;
+}
+
+
+/* Title Styling */
+
+#title {
+	color : orange;
+	border-bottom: 1px solid black;
 }
