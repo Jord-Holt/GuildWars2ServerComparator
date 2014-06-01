@@ -162,7 +162,7 @@ $(document).ready(function() {
 serverComparatorWorldTable.localUtils.setLanguage("EN");
 
 $("#languageSelector").change(function() {
-	serverComparatorWorldTable.localUtils.setLanguage($("#languageSelector").val());
+	serverComparatorWorldTable.localUtils.setLanguage($("#languageSelector select").val());
 });
 
 });
