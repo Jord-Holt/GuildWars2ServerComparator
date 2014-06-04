@@ -156,16 +156,3 @@ var serverComparatorWorldTable = {
 		}
 	}
 };
-
-$(document).ready(function() {
-
-serverComparatorWorldTable.localUtils.setLanguage("EN");
-
-$("#languageSelector").change(function() {
-	serverComparatorWorldTable.localUtils.setLanguage($("#languageSelector select").val());
-});
-
-// Set table to always be fixed away from the footer.
-$("#worldTableModule").css("margin-bottom",$("#footerBar").height());
-
-});

@@ -10,6 +10,8 @@
 		<script src="scripts/knockout.mapping.js"></script>
 		<script src="scripts/services.js"></script>
 		<script src="scripts/serverComparatorWorldTable.js"></script>
+		<script src="scripts/utilities.js"></script>
+		<script src="scripts/main.js"></script>
 		<script src="scripts/less-1.7.0.min.js"></script>
 	</head>
 
@@ -31,11 +33,11 @@
 
 		<div id="worldTableModule">
 
+			<input id="worldNameFilerInput" placeholder="World Name" type="text" data-bind="event: {keyup: filterNames}"></input>
+
 			<div id="worldTablePages" data-bind="foreach: new Array(pages())">
 				<a href="#" data-bind="visible: $parent.worldNameSearchInput(), text:$index() + 1, click: function() {$parent.setPage($index() + 1)}"></a>
 			</div>
-
-			<input id="worldNameFilerInput" placeholder="World Name" type="text" data-bind="event: {keyup: filterNames}"></input>
 
 			<table id="worldTable">
 				<thead>
